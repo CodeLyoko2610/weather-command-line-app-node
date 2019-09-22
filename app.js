@@ -17,14 +17,16 @@ function printMessage(username, badgeCount, points){
 
 printMessage('Chuong Pham', 20, 100);
 //Connect to API url (https://teamtreehouse.username.json)
-const req = https.get(`https://teamtreehouse.com/${username}.json`, res => {
+function getProfile(username){ 
+    https.get(`https://teamtreehouse.com/${username}.json`, res => {
     //Read the data
     res.on('data', data => console.log(`Data: ${data}`))
     //console.dir(res);
      console.log(res.statusCode);
     //Parse the data
     //Print the data
-})
+    })
+}
 
 
 
