@@ -18,9 +18,14 @@ function getProfile(username){
             });
 
             res.on('end', ()=>{
-                let profile = JSON.parse(body);
-                const {name, badges, points} = profile;
-                printMessage(name, badges.length, points.JavaScript);                
+                //Handling errors from not able to parse the response from API
+                try {
+                    let profile = JSON.parse(body);
+                    const {name, badges, points} = profile;
+                    printMessage(name, badges.length, points.JavaScript);                    
+                } catch (error) {
+                    console.error(error.message);                
+                }                               
             });
         });
 
