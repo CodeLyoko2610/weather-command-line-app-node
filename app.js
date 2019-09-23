@@ -1,8 +1,11 @@
 const https = require('https');
 
+const printError = (err)=>{
+    console.error(err.message);
+}
 
-//const getProfile = (username)=>{
-function getProfile(username){ 
+const getProfile = (username)=>{
+//function getProfile(username){ 
     //Handling exceptions (e.g invalid urls - does not fit node specification)
     try {
         const req = https.get(`https://teamtreehouse.com/${username}.json`, res => {
@@ -24,17 +27,20 @@ function getProfile(username){
                     const {name, badges, points} = profile;
                     printMessage(name, badges.length, points.JavaScript);                    
                 } catch (error) {
-                    console.error(error.message);                
+                    //console.error(error.message);                
+                    printError(error);
                 }                               
             });
         });
 
         //Handling error with the Request / Emitted errors (e.g false url)
         req.on('error', error=>{
-            console.error(`Error with the request: ${error.message}`);
+            //console.error(`Error with the request: ${error.message}`);
+            printError(error);
         });
     } catch (error) {
-        console.error(error.message);
+        //console.error(error.message);
+        printError(error);
     }
 }
 
