@@ -1,4 +1,5 @@
 const https = require('https');
+const http = require('http')
 
 const printError = (err)=>{
     console.error(err.message);
@@ -9,6 +10,8 @@ const getProfile = (username)=>{
     //Handling exceptions (e.g invalid urls - does not fit node specification)
     try {
         const req = https.get(`https://teamtreehouse.com/${username}.json`, res => {
+            //Handling status code errors
+            if(res.statusCode === 200){
             let body = "";
 
             //Functions
@@ -31,7 +34,10 @@ const getProfile = (username)=>{
                     printError(error);
                 }                               
             });
-        });
+        } else{
+            console.error(`There has been an error getting profile for ${username} (${res.statusCode} - ${http.STATUS_CODES[res.statusCode]})`);
+        }
+    });
 
         //Handling error with the Request / Emitted errors (e.g false url)
         req.on('error', error=>{
