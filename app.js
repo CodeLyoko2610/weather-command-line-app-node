@@ -1,39 +1,23 @@
 const https = require('https');
 
-console.log('Hello World');
-console.error('This is an error');
-console.dir({name: "Chuong Pham", age: 21});
+const getProfile = (username) => https.get(`https://teamtreehouse.com/${username}.json`, res => {
+    let body = "";
 
-const username = 'dangchuongpham';      
-//Prob: print out user's badge count and JS point
-//Solution: Use NodeJS to connect Treehouse's API -> Get profile information -> Print out
+    //Functions
+    const printMessage = (name, badgesNumb, jsPoints) => {
+        console.log(`${name} has total ${badgesNumb} badge(s) and ${jsPoints} point(s) in JavaScript.`);
+    }
 
-//Print message to the console
-function printMessage(username, badgeCount, points){
-    const message = `${username} has ${badgeCount} total badge(s) and ${points} points in JavaScript`;
+    res.on('data', data => {
+        body += data;
+    });
 
-    console.log(message);
-}
-
-printMessage('Chuong Pham', 20, 100);
-//Connect to API url (https://teamtreehouse.username.json)
-function getProfile(username){ 
-    https.get(`https://teamtreehouse.com/${username}.json`, res => {
-    //Read the data
-    res.on('data', data => console.log(`Data: ${data}`))
-    //console.dir(res);
-     console.log(res.statusCode);
-    //Parse the data
-    //Print the data
+    res.on('end', ()=>{
+        let profile = JSON.parse(body);
+        const {name, badges, points} = profile;
+        printMessage(name, badges.length, points.JavaScript);                
     })
-}
+});
 
-
-
-
-
-
-
-
-
-
+getProfile("dangchuongpham");
+getProfile("chalkers");
