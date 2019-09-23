@@ -19,5 +19,7 @@ const getProfile = (username) => https.get(`https://teamtreehouse.com/${username
     })
 });
 
-getProfile("dangchuongpham");
-getProfile("chalkers");
+//Set users as arguments and put to an array
+const users = process.argv.slice(2);
+
+users.forEach(getProfile);
