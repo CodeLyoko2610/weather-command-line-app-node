@@ -1,8 +1,8 @@
-const printError = (err)=>{
+const print = (err)=>{
     if(err.message) console.error(`Errors here: ${err.message}`);
     else{
         console.error(`Errors here: ${err}`);
     }
 }
 
-module.exports.print = printError;
+module.exports.print = print;

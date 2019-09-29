@@ -1,5 +1,5 @@
 //Functions
-const printError = (err)=>{
+const print = (err)=>{
     if(err.message){
         console.error(`Errors happen: ${err.message}`);
     } else {
@@ -7,4 +7,4 @@ const printError = (err)=>{
     }
 }
 
-module.exports.printError = printError;
+module.exports.print = print;
