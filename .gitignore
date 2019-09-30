@@ -1,6 +1,9 @@
 #personal notes
 notes.txt
 
+#weather-app api.json
+weather-api/api
+
 # Logs
 logs
 *.log
