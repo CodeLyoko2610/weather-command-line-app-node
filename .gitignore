@@ -1,6 +1,10 @@
 #personal notes
 notes.txt
 
+#reviews
+/review-treehouse-api
+/review-weather-api
+
 # Logs
 logs
 *.log
