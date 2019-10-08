@@ -1,5 +1,6 @@
 const https = require('https');
 const http = require('http');
+const querystring = require('querystring');
 
 //import modules
 const keys = require('../api');
@@ -7,9 +8,21 @@ const printMess = require('./printMess');
 const printError = require('./printError');
 
 
-const get = (city) =>{    
+const get = (query) =>{    
     try {            
-        const req = https.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${keys.APIKEY}`, res=>{  
+        const parameters = {
+            appid: keys.APIKEY,
+            units: 'metric'
+        };
+
+        let zipCode = parseInt(query);
+        if(!isNaN(zipCode)){
+            parameters.zip = zipCode;
+        } else{
+            parameters.q = query;
+        }
+        
+        const req = https.get(`https://api.openweathermap.org/data/2.5/weather?${querystring.stringify(parameters)}`, res=>{  
             if(res.statusCode === 200){
                 let body = "";
                 
@@ -22,7 +35,7 @@ const get = (city) =>{
                     printMess.print(result);                       
                 });
             }else{
-                let error = `Cannot get weather status for ${city}. Error ${res.statusCode} - ${http.STATUS_CODES[res.statusCode]}.`
+                let error = `Cannot get weather status for ${query}. Error ${res.statusCode} - ${http.STATUS_CODES[res.statusCode]}.`
                 printError.print(error);
             }     
         })
